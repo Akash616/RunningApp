@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.akashgupta.runningapp.databinding.FragmentTrackingBinding
 import com.akashgupta.runningapp.others.Constants.ACTION_START_OR_RESUME_SERVICE
+import com.akashgupta.runningapp.services.Polyline
 import com.akashgupta.runningapp.services.TrackingService
 import com.akashgupta.runningapp.ui.viewmodels.MainViewModel
 import com.google.android.gms.maps.GoogleMap
@@ -22,6 +23,9 @@ class TrackingFragment : Fragment() {
     private val viewMode: MainViewModel by viewModels()
 
     private var map: GoogleMap? = null
+
+    private var isTracking = false
+    private var pathPoints = mutableListOf<Polyline>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
