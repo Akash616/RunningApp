@@ -1,5 +1,6 @@
 package com.akashgupta.runningapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.akashgupta.runningapp.R
 import com.akashgupta.runningapp.databinding.ActivityMainBinding
 import com.akashgupta.runningapp.db.RunDAO
+import com.akashgupta.runningapp.others.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        navigateToTrackingFragmentIfNeeded(intent) //new launch
 
         setSupportActionBar(binding.toolbar)
 
@@ -50,6 +54,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+    }
+
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+        if (intent?.action == ACTION_SHOW_TRACKING_FRAGMENT) {
+            navController.navigate(R.id.action_global_trackingFragment)
+        }
+        /* If our main activity was destroyed but our service is still running and if we then send that
+        * pending intent that would mean our main activity will be relaunched and in that case it will go inside
+        * of onCreate() again. But if the activity was not destroyed and we use the pending intent to launch it
+        * then it won't go inside of onCreate() again instead it will call onNewIntent().*/
+    }
+
+    override fun onNewIntent(intent: Intent) { //exists launch
+        super.onNewIntent(intent)
+        navigateToTrackingFragmentIfNeeded(intent)
     }
 
     override fun onDestroy() {

@@ -4,6 +4,15 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/setupFragment">
 
+    <action android:id="@+id/action_global_trackingFragment"
+        app:destination="@id/trackingFragment"
+        app:launchSingleTop="true"/>
+    <!--launchSingleTop -> that will just make sure that we don't
+        launch a new instance of our activity because if that would
+        happen we would launch a new instance of our activity every time
+        we click on our notification then of course that new activity
+        doe not have the data of the old activity.-->
+
     <fragment
         android:id="@+id/runFragment"
         android:name="com.akashgupta.runningapp.ui.fragments.RunFragment"
