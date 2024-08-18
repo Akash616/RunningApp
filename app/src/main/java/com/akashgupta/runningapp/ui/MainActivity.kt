@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navigateToTrackingFragmentIfNeeded(intent) //new launch
-
         setSupportActionBar(binding.toolbar)
 
         //bottom navigation view connect with navigation components
@@ -41,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         // Set up the NavController
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigationHostFragment) as NavHostFragment
         navController = navHostFragment.navController
+
+        // Ensure navController is initialized before calling navigateToTrackingFragmentIfNeeded
+        navigateToTrackingFragmentIfNeeded(intent) //new launch
 
         // Set up the BottomNavigationView with the NavController
         binding.bottomNavigationView.setupWithNavController(navController)
